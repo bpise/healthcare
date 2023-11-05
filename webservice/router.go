@@ -41,4 +41,6 @@ func middlewareAuth(c *gin.Context) {
 func InitRouter() {
 	group := webEngine.Group("/group", middlewareAuth)
 	group.POST("/:groupName", setupGroup)
+	group.GET("/:groupName/transparency/average", getTransparencyAverage)
+	group.GET("/:groupName/temperature/average", getTemperatureAverage)
 }

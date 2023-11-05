@@ -39,6 +39,10 @@ func InitDB(ctx context.Context) {
 		os.Exit(1)
 	}
 
+	if err := dbPool.Ping(ctx); err != nil {
+		logger.Fatalf("%v", err)
+	}
+
 	logger.Infof("Connected to DB ...")
 }
 

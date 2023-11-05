@@ -2,6 +2,7 @@ package cache
 
 import (
 	"context"
+	"os"
 	"time"
 
 	"healthcare/logger"
@@ -19,7 +20,12 @@ func InitRedis(ctx context.Context) {
 		return
 	}
 
-	opts, err := redis.ParseURL(default_REDIS_URL)
+	redisUrl := os.Getenv("REDIS_URL")
+	if redisUrl == "" {
+		redisUrl = default_REDIS_URL
+	}
+
+	opts, err := redis.ParseURL(redisUrl)
 	if err != nil {
 		logger.Fatalf("%v", err)
 	}

@@ -3,6 +3,7 @@ version: '3.9'
 services:
   postgres:
     image: postgres:14-alpine
+    container_name: postgres
     ports:
       - 5432:5432
     volumes:
@@ -17,11 +18,29 @@ services:
       retries: 5
   redis:
     image: redis
+    container_name: redis
     ports:
       - "6379:6379"
     volumes:
       - redis_data:/data
     command: redis-server
+  web:
+     build:
+        context: ./
+        dockerfile: Dockerfile.release
+     ports:
+       - "80:8080"
+     restart: always
+     image: sensor_server:dev
+     container_name: sensor_server_dev
+     env_file:
+       - .env
+     depends_on:
+       - postgres
+       - redis
+     links:
+       - postgres
+       - redis
 volumes:
   postgres_data:
     driver: local

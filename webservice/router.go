@@ -49,4 +49,7 @@ func InitRouter() {
 	region := webEngine.Group("/region", middlewareAuth)
 	region.GET("/temperature/min", getTemperatureInRegionMin)
 	region.GET("/temperature/max", getTemperatureInRegionMax)
+
+	sensor := webEngine.Group("/sensor", middlewareAuth)
+	sensor.GET("/:codeName/temperature/average", getTemperatureAverageBySensor)
 }

@@ -70,3 +70,14 @@ const TemperatureInRegionMaxSQLText = `
 		and s.y_3d BETWEEN {{.yMin}} and {{.yMax}}
 		and s.z_3d BETWEEN {{.zMin}} and {{.zMax}}
 `
+
+const TemperatureAverageBySensorSQLText = `
+	SELECT
+		avg(f.temperature)
+	FROM
+		sensors s
+		left join fish_specie_data f on s.id = f.sensor_id
+	WHERE
+		s.code_name = '{{.CODE_NAME}}'
+		and f.created_time BETWEEN to_timestamp({{.FROM}}) and to_timestamp({{.TILL}})
+`

@@ -1,0 +1,10 @@
+info:
+  contact: {}
+paths:
+  /group/:groupName/transparency/average:
+    get:
+      responses:
+        "200":
+          description: OK
+      summary: Retrieves the current average temperature inside the group.
+swagger: "2.0"

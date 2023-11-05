@@ -1,0 +1,442 @@
+{
+	"info": {
+		"_postman_id": "143166fe-8798-4c98-924f-b0853f98bca3",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20472130"
+	},
+	"item": [
+		{
+			"name": "get-transparency-average",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "Localhost/group/:groupName/transparency/average",
+					"host": [
+						"Localhost"
+					],
+					"path": [
+						"group",
+						":groupName",
+						"transparency",
+						"average"
+					],
+					"variable": [
+						{
+							"key": "groupName",
+							"value": "gamma"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-transparency-average-untill",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "Localhost/group/:groupName/transparency/average?from=1699173029&till=1699175089",
+					"host": [
+						"Localhost"
+					],
+					"path": [
+						"group",
+						":groupName",
+						"transparency",
+						"average"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "1699173029"
+						},
+						{
+							"key": "till",
+							"value": "1699175089"
+						}
+					],
+					"variable": [
+						{
+							"key": "groupName",
+							"value": "gamma"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-temperature-average",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "Localhost/group/gamma/temperature/average",
+					"host": [
+						"Localhost"
+					],
+					"path": [
+						"group",
+						"gamma",
+						"temperature",
+						"average"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-temperature-average-untill",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "Localhost/group/:groupName/temperature/average?from=1699173029&till=1699175089",
+					"host": [
+						"Localhost"
+					],
+					"path": [
+						"group",
+						":groupName",
+						"temperature",
+						"average"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "1699173029"
+						},
+						{
+							"key": "till",
+							"value": "1699175089"
+						}
+					],
+					"variable": [
+						{
+							"key": "groupName",
+							"value": "gamma"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-fish-species",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "Localhost/group/gamma/species",
+					"host": [
+						"Localhost"
+					],
+					"path": [
+						"group",
+						"gamma",
+						"species"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-fish-species-top",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "Localhost/group/gamma/species/top/3",
+					"host": [
+						"Localhost"
+					],
+					"path": [
+						"group",
+						"gamma",
+						"species",
+						"top",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-temperature-min",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "Localhost/region/temperature/min",
+					"host": [
+						"Localhost"
+					],
+					"path": [
+						"region",
+						"temperature",
+						"min"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-temperature-min-in-regioin",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "Localhost/region/temperature/min?xMin=0&xMax=10000&yMin=0&yMax=80000&zMin=0&zMax=10000",
+					"host": [
+						"Localhost"
+					],
+					"path": [
+						"region",
+						"temperature",
+						"min"
+					],
+					"query": [
+						{
+							"key": "xMin",
+							"value": "0"
+						},
+						{
+							"key": "xMax",
+							"value": "10000"
+						},
+						{
+							"key": "yMin",
+							"value": "0"
+						},
+						{
+							"key": "yMax",
+							"value": "80000"
+						},
+						{
+							"key": "zMin",
+							"value": "0"
+						},
+						{
+							"key": "zMax",
+							"value": "10000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-temperature-max-in-regioin",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "Localhost/region/temperature/max?xMin=100&xMax=10000&yMin=100&yMax=8000&zMin=100&zMax=10000",
+					"host": [
+						"Localhost"
+					],
+					"path": [
+						"region",
+						"temperature",
+						"max"
+					],
+					"query": [
+						{
+							"key": "xMin",
+							"value": "100"
+						},
+						{
+							"key": "xMax",
+							"value": "10000"
+						},
+						{
+							"key": "yMin",
+							"value": "100"
+						},
+						{
+							"key": "yMax",
+							"value": "8000"
+						},
+						{
+							"key": "zMin",
+							"value": "100"
+						},
+						{
+							"key": "zMax",
+							"value": "10000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-temperature-max",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "Localhost/region/temperature/max",
+					"host": [
+						"Localhost"
+					],
+					"path": [
+						"region",
+						"temperature",
+						"max"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-temperature-by-codename",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "Localhost/sensor/:codeName/temperature/average",
+					"host": [
+						"Localhost"
+					],
+					"path": [
+						"sensor",
+						":codeName",
+						"temperature",
+						"average"
+					],
+					"variable": [
+						{
+							"key": "codeName",
+							"value": "gamma 20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-temperature-by-codename-untill",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "Localhost/sensor/:codeName/temperature/average?from=1699173029&till=1699175089",
+					"host": [
+						"Localhost"
+					],
+					"path": [
+						"sensor",
+						":codeName",
+						"temperature",
+						"average"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "1699173029"
+						},
+						{
+							"key": "till",
+							"value": "1699175089"
+						}
+					],
+					"variable": [
+						{
+							"key": "codeName",
+							"value": "gamma 20"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

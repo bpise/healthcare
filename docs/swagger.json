@@ -1,0 +1,18 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/group/:groupName/transparency/average": {
+            "get": {
+                "summary": "Retrieves the current average temperature inside the group.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    }
+}

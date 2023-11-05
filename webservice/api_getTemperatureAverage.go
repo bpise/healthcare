@@ -15,7 +15,10 @@ import (
 
 var tmplTemperatureAverage = template.Must(template.New("TemperatureAverage").Parse(db.TemperatureAverageSQLText))
 
-// getTemperatureAverage - Retrieves the current average temperature inside the group.
+// @title getTemperatureAverage
+// @Summary Retrieves the current average temperature inside the group.
+// @Success 200
+// @Router /group/:groupName/transparency/average [get]
 func getTemperatureAverage(c *gin.Context) {
 	// Check the param in the request.
 	groupName := c.Param("groupName")

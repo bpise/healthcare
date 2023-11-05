@@ -34,7 +34,8 @@ var (
 func generateSensorData(sensorId string, deep int64, tran int) error {
 	spec := rand.Int() % len(fishSpecies)
 	count := rand.Int() % default_count_max
-	p := float64(deep) / float64(default_3d_max)
+	// Adjust temperature with a small random change
+	p := float64(deep-(rand.Int63()%3)) / float64(default_3d_max)
 	temp := default_temp_max - ((default_temp_max - default_temp_min) * (p))
 
 	affected, err := db.DoInsert(tmplCreateFishSpecieData, &map[string]interface{}{

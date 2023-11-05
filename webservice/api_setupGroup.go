@@ -32,7 +32,7 @@ var (
 	tmplSensorIdMax  = template.Must(template.New("SensorIdMax").Parse(db.SensorIdMaxSQLText))
 )
 
-// setupGroup - generate the sensors by the given group details(group name, number of sensors and the output rate)
+// setupGroup generate the sensors based on the given group details(group name, number of sensors and the output rate)
 func setupGroup(c *gin.Context) {
 	// Check the param in the request.
 	groupName := strings.ToLower(c.Param("groupName"))
@@ -41,14 +41,14 @@ func setupGroup(c *gin.Context) {
 		return
 	}
 
-	// setup the GroupName, SensorNumber, and OutputRate of Sensor
+	// Setup the GroupName, SensorNumber, and OutputRate of Sensor
 	var newGroup group
 	if err := c.ShouldBindWith(&newGroup, binding.Form); err != nil {
 		c.String(http.StatusNotFound, err.Error())
 	}
 	newGroup.GroupName = groupName
 
-	// generate the related sensors for a specified group
+	// Generate the related sensors for a specified group
 	if err := generateSensorForGroup(newGroup); err != nil {
 		logger.Errorf(err.Error())
 	}
@@ -56,7 +56,7 @@ func setupGroup(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"GroupName": newGroup, "message": "Setup Group is completed."})
 }
 
-// generateSensorForGroup
+// generateSensorForGroup - Generate sensors for a group based on the provided details.
 func generateSensorForGroup(newGroup group) error {
 	if newGroup.SensorNumber <= 0 {
 		newGroup.SensorNumber = default_SensorNumber
@@ -65,7 +65,7 @@ func generateSensorForGroup(newGroup group) error {
 		newGroup.OutputRate = default_OutputRate
 	}
 
-	// generate sensors in group by the given details
+	// Generate sensors in the group based on the provided details.
 	for i := 0; i < newGroup.SensorNumber; i++ {
 		if err := createSensor(newGroup); err != nil {
 			logger.Errorf(err.Error())
@@ -77,7 +77,7 @@ func generateSensorForGroup(newGroup group) error {
 	return nil
 }
 
-// createSensor
+// createSensor - Create a sensor for the specified group.
 func createSensor(g group) error {
 	maxIdx := int(0)
 	err := db.GetSingleRow(tmplSensorIdMax, &map[string]interface{}{"GROUP_NAME": g.GroupName}, &maxIdx)

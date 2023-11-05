@@ -6,12 +6,16 @@ import (
 	"healthcare/logger"
 
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+// default_PORT - Default port for the HTTP service.
 const default_PORT = "8080"
 
 var webEngine *gin.Engine
 
+// InitWebEngine - Initializes the HTTP service if it's not already initialized.
 func InitWebEngine() {
 	if webEngine != nil {
 		return
@@ -26,6 +30,7 @@ func InitWebEngine() {
 	webEngine = gin.Default()
 }
 
+// Run - Runs the HTTP service if it's initialized.
 func Run() error {
 	if webEngine != nil {
 		return webEngine.Run()
@@ -33,11 +38,13 @@ func Run() error {
 	return nil
 }
 
+// middlewareAuth - Authentication middleware for handling requests.
 func middlewareAuth(c *gin.Context) {
 	logger.Infof("exec middleware for authentication...")
 	c.Next()
 }
 
+// InitRouter - Initializes the sensor statistics APIs and sets up routes.
 func InitRouter() {
 	group := webEngine.Group("/group", middlewareAuth)
 	group.POST("/:groupName", setupGroup)
@@ -52,4 +59,7 @@ func InitRouter() {
 
 	sensor := webEngine.Group("/sensor", middlewareAuth)
 	sensor.GET("/:codeName/temperature/average", getTemperatureAverageBySensor)
+
+	// supports swagger docs
+	webEngine.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }

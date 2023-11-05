@@ -7,7 +7,7 @@ WORKDIR /app/
 
 COPY ./go.mod .
 COPY ./go.sum .
-COPY ./sensorServer.go .
+COPY ./main.go ./sensorServer.go
 
 RUN mkdir cache
 COPY ./cache/ ./cache/
@@ -23,6 +23,9 @@ COPY ./logger/ ./logger/
 
 RUN mkdir webservice
 COPY ./webservice/ ./webservice/
+
+RUN mkdir docs
+COPY ./docs/ ./docs/
 
 RUN go build -o sensorServer 
 

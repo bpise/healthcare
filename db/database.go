@@ -63,7 +63,7 @@ func GetSQLString(templ *template.Template, param any) (*bytes.Buffer, error) {
 	return sql, nil
 }
 
-// DoInsert -
+// DoInsert - Executes an SQL INSERT statement using the provided template and parameters.
 func DoInsert(templ *template.Template, param any) (int64, error) {
 	sql, err := GetSQLString(templ, param)
 	if err != nil {
@@ -77,7 +77,7 @@ func DoInsert(templ *template.Template, param any) (int64, error) {
 	}
 	defer conn.Release()
 
-	logger.Debugf("====sql string==== for template:%s ====\n%v", templ.Name(), sql.String())
+	logger.Debugf("sql-->for template:%s \n%v", templ.Name(), sql.String())
 	//
 	cmd, err := conn.Exec(context.Background(), sql.String())
 	if err != nil {
@@ -88,7 +88,7 @@ func DoInsert(templ *template.Template, param any) (int64, error) {
 	return cmd.RowsAffected(), nil
 }
 
-// GetSingleRow -
+// GetSingleRow - Retrieves a single row from the database using the provided template and parameters.
 func GetSingleRow(templ *template.Template, param any, dest ...interface{}) error {
 	sql, err := GetSQLString(templ, param)
 	if err != nil {
@@ -102,7 +102,7 @@ func GetSingleRow(templ *template.Template, param any, dest ...interface{}) erro
 	}
 	defer conn.Release()
 
-	logger.Debugf("====sql string==== for template:%s ====\n%v", templ.Name(), sql.String())
+	logger.Debugf("sql--> for template:%s\n%v", templ.Name(), sql.String())
 	//
 	err = conn.QueryRow(context.Background(), sql.String()).Scan(dest...)
 	if err != nil {
@@ -112,7 +112,7 @@ func GetSingleRow(templ *template.Template, param any, dest ...interface{}) erro
 	return nil
 }
 
-// GetRows -
+// GetRows - Retrieves all rows from the database using the provided template and parameters.
 func GetRows(templ *template.Template, param *map[string]interface{}) (*[]map[string]interface{}, error) {
 	sql, err := GetSQLString(templ, param)
 	if err != nil {
@@ -127,17 +127,21 @@ func GetRows(templ *template.Template, param *map[string]interface{}) (*[]map[st
 	defer conn.Release()
 
 	logger.Debugf("====sql string==== for template:%s ====\n%v", templ.Name(), sql.String())
-	//
+
+	// Execute the SQL query using the database connection and retrieve the result rows.
 	rows, err := conn.Query(context.Background(), sql.String())
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
+	// Retrieve the column descriptions from the result rows.
 	columns := rows.FieldDescriptions()
+
+	// Initialize a slice to store the query results as a list of maps.
 	var results []map[string]interface{}
 
-	// get the sensor details from db
+	// Get the detailed rows data from db
 	for rows.Next() {
 		values, err := rows.Values()
 		if err != nil {

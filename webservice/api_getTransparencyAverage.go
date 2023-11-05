@@ -15,7 +15,7 @@ import (
 
 var tmplTransparencyAverage = template.Must(template.New("TransparencyAverage").Parse(db.TransparencyAverageSQLText))
 
-// getTransparencyAverage - get the current average transparency inside the group
+// getTransparencyAverage - Retrieves the current average transparency inside the group.
 func getTransparencyAverage(c *gin.Context) {
 	// Check the param in the request.
 	groupName := c.Param("groupName")
@@ -25,10 +25,11 @@ func getTransparencyAverage(c *gin.Context) {
 	}
 
 	// Get the cached TransparencyAverage for a group
-	// if succeed, return the result directly
+	// if successful, return the result directly
 	cacheKey := groupName + "TranAvg"
 	result, err := cache.Get(c, cacheKey).Result()
 	if err == nil {
+		// If the result was found in the cache, parse it and return it directly
 		cachedAverage, err := strconv.ParseFloat(result, 32)
 		if err == nil {
 			logger.Debugf("cachedAverage:%f", cachedAverage)
@@ -45,11 +46,12 @@ func getTransparencyAverage(c *gin.Context) {
 		return
 	}
 
-	// Store the TransparencyAverage into redis for caching
+	// Store the TransparencyAverage into Redis for caching
 	_, err = cache.Set(c, cacheKey, average, time.Second*10).Result()
 	if err != nil {
 		logger.Errorf(err.Error())
 	}
 
+	// Return the calculated TransparencyAverage
 	c.JSON(http.StatusOK, gin.H{"GroupName": groupName, "TransparencyAverage": average})
 }

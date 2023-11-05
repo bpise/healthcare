@@ -8,6 +8,7 @@ import (
 	"healthcare/logger"
 )
 
+// Default constants for generating data
 const (
 	default_count_max = 1000
 	default_temp_min  = -30
@@ -15,19 +16,21 @@ const (
 	default_tran_max  = 100
 )
 
+// fishSpecies - List of fish species
 var fishSpecies = []string{
 	"Atlantic Bluefin Tuna", "Atlantic Cod", "Atlantic Goliath Grouper",
 	"Atlantic Salmon", "Beluga Sturgeon", "Blue Marlin",
 	"Blue Tang", "Bluebanded Goby", "Bluehead Wrasse",
 }
 
+// SQL templates
 var (
 	tmplActivatedSensors         = template.Must(template.New("ActivatedSensors").Parse(db.ActivatedSensorsSQLText))
 	tmplCreateFishSpecieData     = template.Must(template.New("CreateFishSpecieData").Parse(db.CreateFishSpecieDataSQLText))
 	tmplNearbySensorTransparency = template.Must(template.New("NearbySensorTransparency").Parse(db.NearbySensorTransparencySQLText))
 )
 
-// generateSensorData
+// generateSensorData - Generates sensor data(randomized) for a sensor with the given sensor ID, depth, and nearby sensor's transparency.
 func generateSensorData(sensorId string, deep int64, tran int) error {
 	spec := rand.Int() % len(fishSpecies)
 	count := rand.Int() % default_count_max
@@ -48,8 +51,9 @@ func generateSensorData(sensorId string, deep int64, tran int) error {
 	return nil
 }
 
-// getNearbySensorTransparency
+// getNearbySensorTransparency - Retrieves transparency data for a nearby sensor or generates random data if unavailable
 func getNearbySensorTransparency(sensorId string, x, y, z int64) (tran int) {
+	// Get transparency from the database
 	err := db.GetSingleRow(tmplNearbySensorTransparency, &map[string]interface{}{
 		"ID":   sensorId,
 		"X_3D": x,
@@ -60,7 +64,7 @@ func getNearbySensorTransparency(sensorId string, x, y, z int64) (tran int) {
 		return rand.Int() % default_tran_max
 	}
 
-	//
+	// Adjust transparency with a random change
 	minChange := rand.Int() % 3
 	tran += minChange
 	if tran >= default_tran_max {

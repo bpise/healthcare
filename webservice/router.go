@@ -43,4 +43,6 @@ func InitRouter() {
 	group.POST("/:groupName", setupGroup)
 	group.GET("/:groupName/transparency/average", getTransparencyAverage)
 	group.GET("/:groupName/temperature/average", getTemperatureAverage)
+	group.GET("/:groupName/species", getSpecies)
+	group.GET("/:groupName/species/top/:n", getSpeciesTopN)
 }

@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"healthcare/cache"
+	"healthcare/cronjob"
 	"healthcare/db"
 	"healthcare/logger"
 	"healthcare/webservice"
@@ -27,6 +28,14 @@ func main() {
 	// Init Web Service Engine and the Routers
 	webservice.InitWebEngine()
 	webservice.InitRouter()
+
+	// Init Cronjob
+	cronjob.InitCronJob()
+	cronjob.Start()
+	defer cronjob.Stop()
+
+	// start to generate the sensors with simulated data
+	go webservice.StartSetupSensors()
 
 	// Start HTTP Web Service
 	if err := webservice.Run(); err != nil && !errors.Is(err, http.ErrServerClosed) {

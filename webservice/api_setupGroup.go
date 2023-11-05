@@ -21,8 +21,6 @@ const (
 	default_OutputRate_max = 60
 )
 
-var groups = map[string]interface{}{"alpha": true, "beta": true, "gamma": true, "delta": true, "epsilon": true, "zeta": true, "eta": true, "theta": true, "iota": true, "kappa": true, "lambda": true, "mu": true, "nu": true, "xi": true, "omicron": true, "pi": true, "rho": true, "sigma": true, "tau": true, "upsilon": true, "phi": true, "chi": true, "psi": true, "omega": true}
-
 type group struct {
 	GroupName    string `form:"groupName" json:"groupName" uri:"groupName"`
 	SensorNumber int    `form:"number" json:"number"`
@@ -38,18 +36,28 @@ var (
 func setupGroup(c *gin.Context) {
 	// Check the param in the request.
 	groupName := strings.ToLower(c.Param("groupName"))
-	if len(groupName) == 0 || groups[groupName] != true {
+	if len(groupName) == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "groupName is invalid, should be a greek letter."})
 		return
 	}
 
 	// setup the GroupName, SensorNumber, and OutputRate of Sensor
 	var newGroup group
-	err := c.ShouldBindWith(&newGroup, binding.Form)
-	if err != nil {
+	if err := c.ShouldBindWith(&newGroup, binding.Form); err != nil {
 		c.String(http.StatusNotFound, err.Error())
 	}
 	newGroup.GroupName = groupName
+
+	// generate the related sensors for a specified group
+	if err := generateSensorForGroup(newGroup); err != nil {
+		logger.Errorf(err.Error())
+	}
+
+	c.JSON(http.StatusOK, gin.H{"GroupName": newGroup, "message": "Setup Group is completed."})
+}
+
+// generateSensorForGroup
+func generateSensorForGroup(newGroup group) error {
 	if newGroup.SensorNumber <= 0 {
 		newGroup.SensorNumber = default_SensorNumber
 	}
@@ -59,13 +67,14 @@ func setupGroup(c *gin.Context) {
 
 	// generate sensors in group by the given details
 	for i := 0; i < newGroup.SensorNumber; i++ {
-		err = createSensor(newGroup)
-		if err != nil {
+		if err := createSensor(newGroup); err != nil {
 			logger.Errorf(err.Error())
+			return err
 		}
 	}
 
-	c.JSON(http.StatusOK, gin.H{"GroupName": newGroup, "TransparencyAverage": "setupGroup"})
+	logger.Infof("Setup Group is completed.")
+	return nil
 }
 
 // createSensor

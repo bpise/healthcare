@@ -46,3 +46,27 @@ const FishSpeciesTopNSQLText = `
 	order by total desc
 	limit {{.TOP_N}} offset 0
 `
+
+const TemperatureInRegionMinSQLText = `
+	SELECT
+		min(f.temperature)
+	FROM
+		sensors s
+		left join fish_specie_data f on s.id = f.sensor_id
+	WHERE
+		s.x_3d BETWEEN {{.xMin}} and {{.xMax}}
+		and s.y_3d BETWEEN {{.yMin}} and {{.yMax}}
+		and s.z_3d BETWEEN {{.zMin}} and {{.zMax}}
+`
+
+const TemperatureInRegionMaxSQLText = `
+	SELECT
+		max(f.temperature)
+	FROM
+		sensors s
+		left join fish_specie_data f on s.id = f.sensor_id
+	WHERE
+		s.x_3d BETWEEN {{.xMin}} and {{.xMax}}
+		and s.y_3d BETWEEN {{.yMin}} and {{.yMax}}
+		and s.z_3d BETWEEN {{.zMin}} and {{.zMax}}
+`

@@ -45,4 +45,8 @@ func InitRouter() {
 	group.GET("/:groupName/temperature/average", getTemperatureAverage)
 	group.GET("/:groupName/species", getSpecies)
 	group.GET("/:groupName/species/top/:n", getSpeciesTopN)
+
+	region := webEngine.Group("/region", middlewareAuth)
+	region.GET("/temperature/min", getTemperatureInRegionMin)
+	region.GET("/temperature/max", getTemperatureInRegionMax)
 }

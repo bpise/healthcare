@@ -1,0 +1,11 @@
+FROM sensor_server:dev as builder
+
+FROM alpine:latest 
+
+COPY --from=builder /app/sensorServer  /root/sensorServer
+
+RUN apk --no-cache add ca-certificates
+
+EXPOSE 8080
+
+ENTRYPOINT /root/sensorServer

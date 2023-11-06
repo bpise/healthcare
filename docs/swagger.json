@@ -1,15 +1,317 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "### This program contains 3 main parts: sensor group(s) distribution \u0026 control, sensor data generation \u0026 transfer, and the sensor statistics APIs.\n#### 1. Sensor group kickoff\nDuring the kickoff, the service will generate sensors for each group by greek letter names.\n#### 2. Sensor data generation and transfer\nIn this part, the sensor services will generate the sensor data(fake) by cron jobs. The randomized data will then store the data into the database for testing purposes only. and there may would be a exposed API for such data transfer as well.\n#### 3. Sensor statistics APIs\nThe sensor statistics apis will be exposed to the public. The apis will be used to query the sensor data in the database and return the results.",
+        "title": "Underwater Sensors Data Generation and Statistics API",
+        "contact": {},
+        "version": "1.0"
     },
+    "host": "127.0.0.1",
     "paths": {
-        "/group/:groupName/transparency/average": {
+        "/group/{groupName}/species": {
             "get": {
-                "summary": "Retrieves the current average temperature inside the group.",
+                "tags": [
+                    "Tested"
+                ],
+                "summary": "Retrieves a list all of the currently detected fish species inside the group.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "group name(e.g:alpha)",
+                        "name": "groupName",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/group/{groupName}/species/top/{n}": {
+            "get": {
+                "tags": [
+                    "Tested"
+                ],
+                "summary": "Retrieves a list of the top N species (with counts) currently detected inside the group.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "group name(e.g:alpha)",
+                        "name": "groupName",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "top N species(e.g:10)",
+                        "name": "n",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "the specified date/time pairs of from(UNIX timestamps) such as 1699173029",
+                        "name": "from",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "the specified date/time pairs untill(UNIX timestamps) such as 1699175089",
+                        "name": "till",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/group/{groupName}/temperature/average": {
+            "get": {
+                "description": "the calculated temperature average will be stored into Redis for caching with a 10-second expiration.",
+                "tags": [
+                    "Tested"
+                ],
+                "summary": "Retrieves the current average temperature inside the group.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "group name(e.g:alpha)",
+                        "name": "groupName",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/group/{groupName}/transparency/average": {
+            "get": {
+                "description": "the calculated transparency average will be stored into Redis for caching with a 10-second expiration.",
+                "tags": [
+                    "Tested"
+                ],
+                "summary": "Retrieves the current average transparency inside the group.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "group name(e.g:alpha)",
+                        "name": "groupName",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/region/temperature/max": {
+            "get": {
+                "tags": [
+                    "Tested"
+                ],
+                "summary": "Retrieves the current maximum temperature inside the region.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "minimum of X in region(3D-coordinates) such as 10",
+                        "name": "xMin",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "maximum of X in region(3D-coordinates) such as 10",
+                        "name": "xMax",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "minimum of Y in region(3D-coordinates) such as 10",
+                        "name": "yMin",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "maximum of Y in region(3D-coordinates) such as 10",
+                        "name": "yMax",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "minimum of Z in region(3D-coordinates) such as 10",
+                        "name": "zMin",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "maximum of Z in region(3D-coordinates) such as 10",
+                        "name": "zMax",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/region/temperature/min": {
+            "get": {
+                "tags": [
+                    "Tested"
+                ],
+                "summary": "Retrieves the current minimum temperature inside the region.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "minimum of X in region(3D-coordinates) such as 10",
+                        "name": "xMin",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "maximum of X in region(3D-coordinates) such as 10",
+                        "name": "xMax",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "minimum of Y in region(3D-coordinates) such as 10",
+                        "name": "yMin",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "maximum of Y in region(3D-coordinates) such as 10",
+                        "name": "yMax",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "minimum of Z in region(3D-coordinates) such as 10",
+                        "name": "zMin",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "maximum of Z in region(3D-coordinates) such as 10",
+                        "name": "zMax",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/sensor/{codeName}/temperature/average": {
+            "get": {
+                "tags": [
+                    "Tested"
+                ],
+                "summary": "average temperature detected by a particular sensor between the specified date/time pairs (UNIX timestamps)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "code name(e.g:alpha 1)",
+                        "name": "codeName",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "the specified date/time pairs of from(UNIX timestamps) such as 1699173029",
+                        "name": "from",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "the specified date/time pairs untill(UNIX timestamps) such as 1699175089",
+                        "name": "till",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
                     }
                 }
             }

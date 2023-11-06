@@ -1,10 +1,225 @@
+host: 127.0.0.1
 info:
   contact: {}
+  description: |-
+    ### This program contains 3 main parts: sensor group(s) distribution & control, sensor data generation & transfer, and the sensor statistics APIs.
+    #### 1. Sensor group kickoff
+    During the kickoff, the service will generate sensors for each group by greek letter names.
+    #### 2. Sensor data generation and transfer
+    In this part, the sensor services will generate the sensor data(fake) by cron jobs. The randomized data will then store the data into the database for testing purposes only. and there may would be a exposed API for such data transfer as well.
+    #### 3. Sensor statistics APIs
+    The sensor statistics apis will be exposed to the public. The apis will be used to query the sensor data in the database and return the results.
+  title: Underwater Sensors Data Generation and Statistics API
+  version: "1.0"
 paths:
-  /group/:groupName/transparency/average:
+  /group/{groupName}/species:
     get:
+      parameters:
+      - description: group name(e.g:alpha)
+        in: path
+        name: groupName
+        required: true
+        type: string
       responses:
         "200":
           description: OK
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Retrieves a list all of the currently detected fish species inside
+        the group.
+      tags:
+      - Tested
+  /group/{groupName}/species/top/{n}:
+    get:
+      parameters:
+      - description: group name(e.g:alpha)
+        in: path
+        name: groupName
+        required: true
+        type: string
+      - description: top N species(e.g:10)
+        in: path
+        name: "n"
+        required: true
+        type: integer
+      - description: the specified date/time pairs of from(UNIX timestamps) such as
+          1699173029
+        in: query
+        name: from
+        type: integer
+      - description: the specified date/time pairs untill(UNIX timestamps) such as
+          1699175089
+        in: query
+        name: till
+        type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Retrieves a list of the top N species (with counts) currently detected
+        inside the group.
+      tags:
+      - Tested
+  /group/{groupName}/temperature/average:
+    get:
+      description: the calculated temperature average will be stored into Redis for
+        caching with a 10-second expiration.
+      parameters:
+      - description: group name(e.g:alpha)
+        in: path
+        name: groupName
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
       summary: Retrieves the current average temperature inside the group.
+      tags:
+      - Tested
+  /group/{groupName}/transparency/average:
+    get:
+      description: the calculated transparency average will be stored into Redis for
+        caching with a 10-second expiration.
+      parameters:
+      - description: group name(e.g:alpha)
+        in: path
+        name: groupName
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Retrieves the current average transparency inside the group.
+      tags:
+      - Tested
+  /region/temperature/max:
+    get:
+      parameters:
+      - description: minimum of X in region(3D-coordinates) such as 10
+        in: query
+        name: xMin
+        type: integer
+      - description: maximum of X in region(3D-coordinates) such as 10
+        in: query
+        name: xMax
+        type: integer
+      - description: minimum of Y in region(3D-coordinates) such as 10
+        in: query
+        name: yMin
+        type: integer
+      - description: maximum of Y in region(3D-coordinates) such as 10
+        in: query
+        name: yMax
+        type: integer
+      - description: minimum of Z in region(3D-coordinates) such as 10
+        in: query
+        name: zMin
+        type: integer
+      - description: maximum of Z in region(3D-coordinates) such as 10
+        in: query
+        name: zMax
+        type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Retrieves the current maximum temperature inside the region.
+      tags:
+      - Tested
+  /region/temperature/min:
+    get:
+      parameters:
+      - description: minimum of X in region(3D-coordinates) such as 10
+        in: query
+        name: xMin
+        type: integer
+      - description: maximum of X in region(3D-coordinates) such as 10
+        in: query
+        name: xMax
+        type: integer
+      - description: minimum of Y in region(3D-coordinates) such as 10
+        in: query
+        name: yMin
+        type: integer
+      - description: maximum of Y in region(3D-coordinates) such as 10
+        in: query
+        name: yMax
+        type: integer
+      - description: minimum of Z in region(3D-coordinates) such as 10
+        in: query
+        name: zMin
+        type: integer
+      - description: maximum of Z in region(3D-coordinates) such as 10
+        in: query
+        name: zMax
+        type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Retrieves the current minimum temperature inside the region.
+      tags:
+      - Tested
+  /sensor/{codeName}/temperature/average:
+    get:
+      parameters:
+      - description: code name(e.g:alpha 1)
+        in: path
+        name: codeName
+        required: true
+        type: string
+      - description: the specified date/time pairs of from(UNIX timestamps) such as
+          1699173029
+        in: query
+        name: from
+        type: integer
+      - description: the specified date/time pairs untill(UNIX timestamps) such as
+          1699175089
+        in: query
+        name: till
+        type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: average temperature detected by a particular sensor between the specified
+        date/time pairs (UNIX timestamps)
+      tags:
+      - Tested
 swagger: "2.0"

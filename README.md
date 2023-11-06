@@ -17,6 +17,7 @@
     - [Sensor Data Generation](#sensor-data-generation)
     - [Sensor Statistics APIs(Postman collection)](#sensor-statistics-apispostman-collection)
     - [Stop the service with the commands of `docker-compose down`](#stop-the-service-with-the-commands-of-docker-compose-down)
+  - [API Documentation](#api-documentation)
 
 
 ### Program Architecture
@@ -91,4 +92,14 @@ A sample tests [Postman collection](./healthcare-sensors.postman_collection.json
  ✔ Container postgres           Removed                                                  0.2s 
  ✔ Network healthcare_default   Removed                                                  0.0s
   ```
-- 
+
+### API Documentation
+- The Swagger generated API docs are located as below:
+```
+http://127.0.0.1/docs/index.html
+```
+
+- Examples:
+- ![1](./docs/api-docs-1.png)
+- ![2](./docs/api-docs-2.png)
+- ![3](./docs/api-docs-3.png)

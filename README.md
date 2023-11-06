@@ -12,12 +12,12 @@
   - [Sensor group kickoff](#sensor-group-kickoff)
   - [Sensor data generation and transfer](#sensor-data-generation-and-transfer)
   - [Sensor statistics APIs](#sensor-statistics-apis)
+  - [API Documentation](#api-documentation)
   - [Tests](#tests)
     - [Group Kickoff](#group-kickoff)
     - [Sensor Data Generation](#sensor-data-generation)
     - [Sensor Statistics APIs(Postman collection)](#sensor-statistics-apispostman-collection)
     - [Stop the service with the commands of `docker-compose down`](#stop-the-service-with-the-commands-of-docker-compose-down)
-  - [API Documentation](#api-documentation)
 
 
 ### Program Architecture
@@ -33,6 +33,16 @@ In this part, the sensor services will generate the sensor data(fake) by cron jo
 ### Sensor statistics APIs
 The sensor statistics apis will be exposed to the public. The apis will be used to query the sensor data in the database and return the results.
 
+### API Documentation
+- The Swagger generated API docs are located as below:
+```
+http://127.0.0.1/docs/index.html
+```
+
+- Examples:
+- ![1](./docs/api-docs-1.png)
+- ![2](./docs/api-docs-2.png)
+- ![3](./docs/api-docs-3.png)
 
 ### Tests
 
@@ -92,14 +102,3 @@ A sample tests [Postman collection](./healthcare-sensors.postman_collection.json
  ✔ Container postgres           Removed                                                  0.2s 
  ✔ Network healthcare_default   Removed                                                  0.0s
   ```
-
-### API Documentation
-- The Swagger generated API docs are located as below:
-```
-http://127.0.0.1/docs/index.html
-```
-
-- Examples:
-- ![1](./docs/api-docs-1.png)
-- ![2](./docs/api-docs-2.png)
-- ![3](./docs/api-docs-3.png)

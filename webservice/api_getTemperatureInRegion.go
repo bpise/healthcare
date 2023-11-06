@@ -19,7 +19,21 @@ var (
 	tmplTemperatureInRegionMax = template.Must(template.New("TemperatureInRegionMax").Parse(db.TemperatureInRegionMaxSQLText))
 )
 
-// getTemperatureInRegionMin - Retrieves the current minimum temperature inside the region.
+// Sensor Statistics APIs
+// @title getTemperatureInRegionMin
+// @Summary Retrieves the current minimum temperature inside the region.
+// @Tags Tested
+// @Param	xMin	query	int		false	"minimum of X in region(3D-coordinates) such as 10"
+// @Param	xMax	query	int		false	"maximum of X in region(3D-coordinates) such as 10"
+// @Param	yMin	query	int		false	"minimum of Y in region(3D-coordinates) such as 10"
+// @Param	yMax	query	int		false	"maximum of Y in region(3D-coordinates) such as 10"
+// @Param	zMin	query	int		false	"minimum of Z in region(3D-coordinates) such as 10"
+// @Param	zMax	query	int		false	"maximum of Z in region(3D-coordinates) such as 10"
+// @Success 200
+// @Failure 400
+// @Failure 404
+// @Failure 500
+// @Router /region/temperature/min [get]
 func getTemperatureInRegionMin(c *gin.Context) {
 	// Get region parameters from the request.
 	params := getRegionParams(c)
@@ -36,7 +50,21 @@ func getTemperatureInRegionMin(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"region": params, "TemperatureInRegionMin": min})
 }
 
-// getTemperatureInRegionMax - Retrieves the current maximum temperature inside the region.
+// Sensor Statistics APIs
+// @title getTemperatureInRegionMax
+// @Summary Retrieves the current maximum temperature inside the region.
+// @Tags Tested
+// @Param	xMin	query	int		false	"minimum of X in region(3D-coordinates) such as 10"
+// @Param	xMax	query	int		false	"maximum of X in region(3D-coordinates) such as 10"
+// @Param	yMin	query	int		false	"minimum of Y in region(3D-coordinates) such as 10"
+// @Param	yMax	query	int		false	"maximum of Y in region(3D-coordinates) such as 10"
+// @Param	zMin	query	int		false	"minimum of Z in region(3D-coordinates) such as 10"
+// @Param	zMax	query	int		false	"maximum of Z in region(3D-coordinates) such as 10"
+// @Success 200
+// @Failure 400
+// @Failure 404
+// @Failure 500
+// @Router /region/temperature/max [get]
 func getTemperatureInRegionMax(c *gin.Context) {
 	// Get region parameters from the request.
 	params := getRegionParams(c)

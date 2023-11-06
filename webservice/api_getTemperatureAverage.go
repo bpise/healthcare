@@ -15,10 +15,17 @@ import (
 
 var tmplTemperatureAverage = template.Must(template.New("TemperatureAverage").Parse(db.TemperatureAverageSQLText))
 
+// Sensor Statistics APIs
 // @title getTemperatureAverage
 // @Summary Retrieves the current average temperature inside the group.
+// @Description  the calculated temperature average will be stored into Redis for caching with a 10-second expiration.
+// @Tags Tested
+// @Param	groupName	path	string	true	"group name(e.g:alpha)"
 // @Success 200
-// @Router /group/:groupName/transparency/average [get]
+// @Failure 400
+// @Failure 404
+// @Failure 500
+// @Router /group/{groupName}/temperature/average [get]
 func getTemperatureAverage(c *gin.Context) {
 	// Check the param in the request.
 	groupName := c.Param("groupName")

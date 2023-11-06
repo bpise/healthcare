@@ -19,7 +19,15 @@ var (
 // A default UNIX timestamp for 'from' parameter
 const default_From = "1699056000"
 
-// getTemperatureAverageBySensor - average temperature detected by a particular sensor between the specified date/time pairs (UNIX timestamps)
+// @title getSpecies
+// @Summary Retrieves a list all of the currently detected fish species inside the group.
+// @Tags Tested
+// @Param	groupName	path	string	true	"group name(e.g:alpha)"
+// @Success 200
+// @Failure 400
+// @Failure 404
+// @Failure 500
+// @Router /group/{groupName}/species [get]
 func getSpecies(c *gin.Context) {
 	// Check the param in the request.
 	groupName := c.Param("groupName")
@@ -39,7 +47,19 @@ func getSpecies(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
-// getSpeciesTopN - Retrieves a list of the top N species (with counts) currently detected inside the group.
+// Sensor Statistics APIs
+// @title  getSpeciesTopN
+// @Summary Retrieves a list of the top N species (with counts) currently detected inside the group.
+// @Tags Tested
+// @Param	groupName	path	string	true	"group name(e.g:alpha)"
+// @Param	n			path	int		true	"top N species(e.g:10)"
+// @Param	from		query	int		false	"the specified date/time pairs of from(UNIX timestamps) such as 1699173029"
+// @Param	till		query	int		false	"the specified date/time pairs untill(UNIX timestamps) such as 1699175089"
+// @Success 200
+// @Failure 400
+// @Failure 404
+// @Failure 500
+// @Router /group/{groupName}/species/top/{n} [get]
 func getSpeciesTopN(c *gin.Context) {
 	// Check the param in the request.
 	groupName := c.Param("groupName")

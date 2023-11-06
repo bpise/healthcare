@@ -15,7 +15,17 @@ import (
 
 var tmplTransparencyAverage = template.Must(template.New("TransparencyAverage").Parse(db.TransparencyAverageSQLText))
 
-// getTransparencyAverage - Retrieves the current average transparency inside the group.
+// Sensor Statistics APIs
+// @title getTransparencyAverage
+// @Summary Retrieves the current average transparency inside the group.
+// @Description  the calculated transparency average will be stored into Redis for caching with a 10-second expiration.
+// @Tags Tested
+// @Param	groupName	path	string	true	"group name(e.g:alpha)"
+// @Success 200
+// @Failure 400
+// @Failure 404
+// @Failure 500
+// @Router /group/{groupName}/transparency/average [get]
 func getTransparencyAverage(c *gin.Context) {
 	// Check the param in the request.
 	groupName := c.Param("groupName")

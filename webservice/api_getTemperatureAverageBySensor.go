@@ -13,7 +13,18 @@ import (
 
 var tmplTemperatureAverageBySensor = template.Must(template.New("TemperatureAverageBySensor").Parse(db.TemperatureAverageBySensorSQLText))
 
-// getTemperatureAverageBySensor - average temperature detected by a particular sensor between the specified date/time pairs (UNIX timestamps)
+// Sensor Statistics APIs
+// @title getTemperatureAverageBySensor
+// @Summary average temperature detected by a particular sensor between the specified date/time pairs (UNIX timestamps)
+// @Tags Tested
+// @Param	codeName	path	string	true	"code name(e.g:alpha 1)"
+// @Param	from		query	int		false	"the specified date/time pairs of from(UNIX timestamps) such as 1699173029"
+// @Param	till		query	int		false	"the specified date/time pairs untill(UNIX timestamps) such as 1699175089"
+// @Success 200
+// @Failure 400
+// @Failure 404
+// @Failure 500
+// @Router /sensor/{codeName}/temperature/average [get]
 func getTemperatureAverageBySensor(c *gin.Context) {
 	from := c.DefaultQuery("from", default_From)
 	till := c.DefaultQuery("till", strconv.FormatInt(time.Now().Unix(), 10))
